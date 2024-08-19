@@ -35,7 +35,7 @@ public class Main {
         String userInput = "";
         boolean isRunning = true;
         boolean isOptionsRunning = false;
-        ListaChico listaChicos = new ListaChico();
+        ListaChico listaChicos = null;
 
         try (Scanner input = new Scanner(System.in)) {
             while(isRunning){
@@ -46,12 +46,13 @@ public class Main {
 
                 switch(userInput){
                     case "a": // Cargar datos
+                        listaChicos = new ListaChico();
                         listaChicos.loadChicosFromCSV("chicos.csv");
                         //listaChicos.printChicos();
                         System.out.println("Chicos cargados desde 'chicos.csv'");
                         break;
                     case "b": // Informe especial
-                        if(listaChicos.getListaChicos().isEmpty()){
+                        if(listaChicos== null){
                             System.out.println("No se han cargado los datos.");
                         } else {
                             System.out.println("******* Lista de Chicos *******");
@@ -63,7 +64,7 @@ public class Main {
                         }
                         break;
                     case "c": // Operaciones
-                        if(listaChicos.getListaChicos().isEmpty()){
+                        if(listaChicos == null){
                             System.out.println("No se han cargado los datos.");
                             break;
                         } else {
@@ -81,6 +82,7 @@ public class Main {
                                         Integer userInputInteger = 0;
 
                                         while(!validCodigo){
+                                            System.out.println("---------------------");
                                             System.out.println("Ingrese el código del chico:");
                                             userInput = input.nextLine();
                                             try {
@@ -97,6 +99,7 @@ public class Main {
                                         boolean validSexo = false;
 
                                         while(!validSexo){
+                                            System.out.println("---------------------");
                                             System.out.println("""
                                                 Ingrese el sexo del chico:
                                                 - F: Femenino
@@ -127,6 +130,7 @@ public class Main {
                                         boolean validEdad = false;
 
                                         while(!validEdad){
+                                            System.out.println("---------------------");
                                             System.out.println("Ingrese la edad del chico:");
                                             userInput = input.nextLine();
                                             try {
@@ -143,6 +147,7 @@ public class Main {
                                         boolean validCiudad = false;
 
                                         while(!validCiudad){
+                                            System.out.println("---------------------");
                                             System.out.println("""
                                                     Ingrese la ciudad del Chico:
                                                     1. Bucaramanga
@@ -179,6 +184,7 @@ public class Main {
                                         userInputInteger = 0;
                                     
                                         while (!editCompleted) {
+                                            System.out.println("---------------------");
                                             if (!chicoSelected) {
                                                 System.out.println("Ingrese el código del chico a editar:");
                                                 userInput = input.nextLine();
@@ -212,6 +218,7 @@ public class Main {
                                                 case "a": // Editar código
                                                     validCodigo = false;
                                                     while (!validCodigo) {
+                                                        System.out.println("---------------------");
                                                         System.out.println("Ingrese el nuevo código del chico.");
                                                         userInput = input.nextLine();
                                                         try {
@@ -227,6 +234,7 @@ public class Main {
                                                 case "b": // Editar sexo
                                                     validSexo = false;
                                                     while (!validSexo) {
+                                                        System.out.println("---------------------");
                                                         System.out.println("""
                                                             Ingrese el nuevo sexo del chico:
                                                             - F: Femenino
@@ -254,6 +262,7 @@ public class Main {
                                                 case "d": // Editar edad
                                                     validEdad = false;
                                                     while (!validEdad) {
+                                                        System.out.println("---------------------");
                                                         System.out.println("Ingrese la nueva edad del chico:");
                                                         userInput = input.nextLine();
                                                         try {
@@ -269,6 +278,7 @@ public class Main {
                                                 case "e": // Editar ciudad
                                                     validCiudad = false;
                                                     while (!validCiudad) {
+                                                        System.out.println("---------------------");
                                                         System.out.println("""
                                                             Ingrese la nueva ciudad del Chico:
                                                             1. Bucaramanga
@@ -308,6 +318,7 @@ public class Main {
                                         userInputInteger = 0;
                                     
                                         while (!removalCompleted) {
+                                            System.out.println("---------------------");
                                             if (!chicoSelected) {
                                                 System.out.println("Ingrese el código del chico a eliminar:");
                                                 userInput = input.nextLine();
@@ -336,19 +347,24 @@ public class Main {
                                         isOptionsRunning = false;
                                         break;
                                     default:
-                                        System.out.println("Opción inválida. Intente denuevo.");
+                                        System.out.println("Opción inválida. Intente de nuevo.");
                                         break;
                                 }
                             }
                         }
                         break;
-                    case "d": //Salir y guardar en CSV
-                        listaChicos.exportChicosToCSV("src/main/resources/chicos.csv");
-                        System.out.println("Gracias por usar nuestro serivico. Los datos han sido guardados exitosamente en el archivo 'chicos.csv'.");
+                    case "d": //Salir y guardar en CSV solamente si los datos fueron cargados previamente
+                        if(listaChicos == null){
+                            System.out.println("No se han cargado los datos, por lo tanto, no se guardó el archivo.");
+                        } else {
+                            listaChicos.exportChicosToCSV("src/main/resources/chicos.csv");
+                            System.out.println("Gracias por usar nuestro serivico. Los datos han sido guardados exitosamente en el archivo 'chicos.csv'.");
+                        }
+                        System.out.println("Código: 2182308 | Juan David Escalante Pinilla | Autoevaluación: 4.9");
                         isRunning = false;
                         break;
                     default:
-                        System.out.println("Opción inválida. Intente denuevo.");
+                        System.out.println("Opción inválida. Intente de nuevo.");
                         break;
                 }
             }

@@ -63,8 +63,8 @@ public class ListaChico {
     }
 
     /**
-     * Exporta el contenido de listaChicos en el archivo csv enviado como parametro.
-     * @param filePath el path del archivo csv
+     * Exporta el contenido de listaChicos en el path enviado como csv.
+     * @param filePath el path donde se guardará el archivo csv
      */
     public void exportChicosToCSV(String filePath){
         try (Writer writer = new FileWriter(filePath);
