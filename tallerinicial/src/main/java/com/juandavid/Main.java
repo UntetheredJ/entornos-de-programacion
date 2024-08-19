@@ -34,19 +34,21 @@ public class Main {
 
         String userInput = "";
         boolean isRunning = true;
+        boolean isOptionsRunning = false;
         ListaChico listaChicos = new ListaChico();
 
         try (Scanner input = new Scanner(System.in)) {
-            while(isRunning == true){
+            while(isRunning){
                 // Print main menu
                 System.out.println(menuPrincipal);
 
-                userInput = input.nextLine();
+                userInput = input.nextLine().toLowerCase();
 
                 switch(userInput){
                     case "a": // Cargar datos
                         listaChicos.loadChicosFromCSV("chicos.csv");
-                        listaChicos.printChicos();
+                        //listaChicos.printChicos();
+                        System.out.println("Chicos cargados desde 'chicos.csv'");
                         break;
                     case "b": // Informe especial
                         if(listaChicos.getListaChicos().isEmpty()){
@@ -61,13 +63,293 @@ public class Main {
                         }
                         break;
                     case "c": // Operaciones
-                        System.out.println("C");
+                        if(listaChicos.getListaChicos().isEmpty()){
+                            System.out.println("No se han cargado los datos.");
+                            break;
+                        } else {
+                            isOptionsRunning = true;
+                            System.out.println(menuOperaciones);
+
+                            while(isOptionsRunning){
+                                userInput = input.nextLine().toLowerCase();
+                                switch(userInput){
+                                    case "a": // Agregar chico
+                                        Chico newChico = new Chico();
+
+                                        // Sets Codigo for Chico
+                                        boolean validCodigo = false;
+                                        Integer userInputInteger = 0;
+
+                                        while(!validCodigo){
+                                            System.out.println("Ingrese el código del chico:");
+                                            userInput = input.nextLine();
+                                            try {
+                                                userInputInteger = Integer.parseInt(userInput);
+                                                validCodigo = true;
+                                            } catch (NumberFormatException e) {
+                                                System.out.println("El dato ingresado no es válido.");
+                                            }
+                                        }
+
+                                        newChico.setCodigo(userInputInteger);
+
+                                        // Sets Sexo for Chico
+                                        boolean validSexo = false;
+
+                                        while(!validSexo){
+                                            System.out.println("""
+                                                Ingrese el sexo del chico:
+                                                - F: Femenino
+                                                - M: Masculino""");
+                                            userInput = input.nextLine().toUpperCase();
+                                            switch(userInput){
+                                                case "F":
+                                                    validSexo = true;
+                                                    break;
+                                                case "M":
+                                                    validSexo = true;
+                                                    break;
+                                                default:
+                                                    System.out.println("Inserte un sexo válido.");
+                                                    break;
+
+                                            }
+                                        }
+
+                                        newChico.setSexo(userInput);
+
+                                        // Sets Nombre for Chico:
+                                        System.out.println("Ingrese el nombre del chico:");
+                                        userInput = input.nextLine().toUpperCase();
+                                        newChico.setNombre(userInput);
+
+                                        // Sets Edad for Chico:
+                                        boolean validEdad = false;
+
+                                        while(!validEdad){
+                                            System.out.println("Ingrese la edad del chico:");
+                                            userInput = input.nextLine();
+                                            try {
+                                                userInputInteger = Integer.parseInt(userInput);
+                                                validEdad = true;
+                                            } catch (NumberFormatException e) {
+                                                System.out.println("El dato ingresado no es válido.");
+                                            }
+                                        }
+
+                                        newChico.setEdad(userInputInteger);
+
+                                        // Set Ciudad for Chico:
+                                        boolean validCiudad = false;
+
+                                        while(!validCiudad){
+                                            System.out.println("""
+                                                    Ingrese la ciudad del Chico:
+                                                    1. Bucaramanga
+                                                    2. Girón
+                                                    3. Floridablanca
+                                                    4. Piedecuesta""");
+                                            userInput = input.nextLine();
+
+                                            try {
+                                                userInputInteger = Integer.parseInt(userInput);
+                                                if(userInputInteger >= 1 && userInputInteger <= 4){
+                                                    validCiudad = true;
+                                                } else {
+                                                    System.out.println("La ciudad no existe. Intente de nuevo.");
+                                                    continue;
+                                                }
+                                                validCiudad = true;
+                                            } catch (NumberFormatException e) {
+                                                System.out.println("El dato ingresado no es válido.");
+                                            }
+                                        }
+
+                                        newChico.setCiudad(userInputInteger);
+
+                                        // Add Chico to listaChicos
+                                        listaChicos.addChico(newChico);
+                                        isOptionsRunning = false;
+
+                                        break;
+                                    case "b": // Editar chico
+                                        boolean editCompleted = false;
+                                        boolean chicoSelected = false;
+                                        Chico chicoToEdit = null;
+                                        userInputInteger = 0;
+                                    
+                                        while (!editCompleted) {
+                                            if (!chicoSelected) {
+                                                System.out.println("Ingrese el código del chico a editar:");
+                                                userInput = input.nextLine();
+                                                try {
+                                                    userInputInteger = Integer.parseInt(userInput);
+                                                    chicoToEdit = listaChicos.findChicoByCodigo(userInputInteger);
+                                                    if (chicoToEdit == null) {
+                                                        System.out.println("El chico con el código " + userInputInteger + " no existe.");
+                                                        continue;
+                                                    } else {
+                                                        chicoSelected = true;
+                                                    }
+                                                } catch (NumberFormatException e) {
+                                                    System.out.println("El dato ingresado no es válido.");
+                                                    continue;
+                                                }
+                                            }
+                                    
+                                            System.out.println("""
+                                                *   ¿Qué valor desea editar?   *
+                                                ********************************
+                                                *     a. Código                *
+                                                *     b. Sexo                  *
+                                                *     c. Nombre                *
+                                                *     d. Edad                  *
+                                                *     e. Ciudad                *
+                                                *     f. Volver                *
+                                                ********************************""");
+                                            userInput = input.nextLine().toLowerCase();
+                                            switch (userInput) {
+                                                case "a": // Editar código
+                                                    validCodigo = false;
+                                                    while (!validCodigo) {
+                                                        System.out.println("Ingrese el nuevo código del chico.");
+                                                        userInput = input.nextLine();
+                                                        try {
+                                                            userInputInteger = Integer.parseInt(userInput);
+                                                            chicoToEdit.setCodigo(userInputInteger);
+                                                            validCodigo = true;
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("El dato ingresado no es válido.");
+                                                        }
+                                                    }
+                                                    System.out.println("Código del chico editado satisfactoriamente.");
+                                                    break;
+                                                case "b": // Editar sexo
+                                                    validSexo = false;
+                                                    while (!validSexo) {
+                                                        System.out.println("""
+                                                            Ingrese el nuevo sexo del chico:
+                                                            - F: Femenino
+                                                            - M: Masculino""");
+                                                        userInput = input.nextLine().toUpperCase();
+                                                        switch (userInput) {
+                                                            case "F":
+                                                            case "M":
+                                                                chicoToEdit.setSexo(userInput);
+                                                                validSexo = true;
+                                                                System.out.println("Sexo del chico editado satisfactoriamente.");
+                                                                break;
+                                                            default:
+                                                                System.out.println("Inserte un sexo válido.");
+                                                                break;
+                                                        }
+                                                    }
+                                                    break;
+                                                case "c": // Editar nombre
+                                                    System.out.println("Ingrese el nuevo nombre del chico:");
+                                                    userInput = input.nextLine().toUpperCase();
+                                                    chicoToEdit.setNombre(userInput);
+                                                    System.out.println("Nombre del chico editado satisfactoriamente.");
+                                                    break;
+                                                case "d": // Editar edad
+                                                    validEdad = false;
+                                                    while (!validEdad) {
+                                                        System.out.println("Ingrese la nueva edad del chico:");
+                                                        userInput = input.nextLine();
+                                                        try {
+                                                            userInputInteger = Integer.parseInt(userInput);
+                                                            chicoToEdit.setEdad(userInputInteger);
+                                                            validEdad = true;
+                                                            System.out.println("Edad del chico editada satisfactoriamente.");
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("El dato ingresado no es válido.");
+                                                        }
+                                                    }
+                                                    break;
+                                                case "e": // Editar ciudad
+                                                    validCiudad = false;
+                                                    while (!validCiudad) {
+                                                        System.out.println("""
+                                                            Ingrese la nueva ciudad del Chico:
+                                                            1. Bucaramanga
+                                                            2. Girón
+                                                            3. Floridablanca
+                                                            4. Piedecuesta""");
+                                                        userInput = input.nextLine();
+                                                        try {
+                                                            userInputInteger = Integer.parseInt(userInput);
+                                                            if (userInputInteger >= 1 && userInputInteger <= 4) {
+                                                                chicoToEdit.setCiudad(userInputInteger);
+                                                                validCiudad = true;
+                                                                System.out.println("Ciudad del chico editada satisfactoriamente.");
+                                                            } else {
+                                                                System.out.println("La ciudad no existe. Intente de nuevo.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("El dato ingresado no es válido.");
+                                                        }
+                                                    }
+                                                    break;
+                                                case "f": // Salir
+                                                    editCompleted = true;
+                                                    break;
+                                                default:
+                                                    System.out.println("Opción no válida. Intente de nuevo.");
+                                                    break;
+                                            }
+                                        }
+                                    
+                                        isOptionsRunning = false;
+                                        break;
+                                    case "c": // Eliminar chico
+                                        boolean removalCompleted = false;
+                                        chicoSelected = false;
+                                        chicoToEdit = null;
+                                        userInputInteger = 0;
+                                    
+                                        while (!removalCompleted) {
+                                            if (!chicoSelected) {
+                                                System.out.println("Ingrese el código del chico a eliminar:");
+                                                userInput = input.nextLine();
+                                                try {
+                                                    userInputInteger = Integer.parseInt(userInput);
+                                                    chicoToEdit = listaChicos.findChicoByCodigo(userInputInteger);
+                                                    if (chicoToEdit == null) {
+                                                        System.out.println("El chico con el código " + userInputInteger + " no existe.");
+                                                        continue;
+                                                    } else {
+                                                        chicoSelected = true;
+                                                    }
+                                                } catch (NumberFormatException e) {
+                                                    System.out.println("El dato ingresado no es válido.");
+                                                    continue;
+                                                }
+                                            }
+                                            removalCompleted = true;
+                                        }
+
+                                        listaChicos.deleteChico(chicoToEdit);
+                                        isOptionsRunning = false;
+                                        break;
+                                    case "d": // Volver
+                                        System.out.println("D");
+                                        isOptionsRunning = false;
+                                        break;
+                                    default:
+                                        System.out.println("Opción inválida. Intente denuevo.");
+                                        break;
+                                }
+                            }
+                        }
                         break;
-                    case "d": //Salir
+                    case "d": //Salir y guardar en CSV
+                        listaChicos.exportChicosToCSV("src/main/resources/chicos.csv");
                         System.out.println("Gracias por usar nuestro serivico. Los datos han sido guardados exitosamente en el archivo 'chicos.csv'.");
                         isRunning = false;
+                        break;
                     default:
                         System.out.println("Opción inválida. Intente denuevo.");
+                        break;
                 }
             }
         }

@@ -1,13 +1,16 @@
 package com.juandavid;
 
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -54,6 +57,31 @@ public class ListaChico {
 
             List<Chico> chicos = csvToBean.parse();
             this.listaChicos = new ArrayList<>(chicos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Exporta el contenido de listaChicos en el archivo csv enviado como parametro.
+     * @param filePath el path del archivo csv
+     */
+    public void exportChicosToCSV(String filePath){
+        try (Writer writer = new FileWriter(filePath);
+             CSVWriter csvWriter = new CSVWriter(writer)) {
+
+            for (Chico chico : listaChicos) {
+                String[] data = {
+                    chico.getCodigo().toString(),
+                    chico.getSexo(),
+                    chico.getNombre(),
+                    chico.getEdad().toString(),
+                    chico.getCiudad().toString(),
+                };
+                csvWriter.writeNext(data);
+            }
+
+            System.out.println("Total chicos exportados: " + listaChicos.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,5 +160,48 @@ public class ListaChico {
 
             System.out.println(grupo + ": " + chicosGrupo + " chicos.");
         }
+    }
+
+    /**
+     * Agrega un Chico a listaChicos.
+     * @param chico el Chico a agregar.
+     */
+    public void addChico(Chico newChico){
+        try{
+            listaChicos.add(newChico);
+            System.out.println("El chico fue agregado exitosamente.");
+        } catch (Exception e) {
+            System.out.println("No se pudo agregar el chico: " + e);
+        }
+    }
+
+    /**
+     * Elimina a un Chico de listaChicos.
+     * @param chico el Chico a eliminar.
+     */
+    public void deleteChico(Chico chico){
+        if(listaChicos.contains(chico)){
+            listaChicos.remove(chico);
+            System.out.println("El chico fue eliminado satisfactoriamente.");
+        } else {
+            System.out.println("El chico no existe - no se pudo eliminar.");
+        }
+    }
+
+    /**
+     * Busca un chico en listaChicos a partir del código.
+     * @param codigo el código del Chico a buscar
+     * @return el Chico encontrado
+     */
+    public Chico findChicoByCodigo(Integer codigo){
+        Chico foundChico = null;
+        
+        for(Chico chico: listaChicos){
+            if(codigo.equals(chico.getCodigo())){
+                return chico;
+            }
+        }
+        // Returns null if no Chico was found
+        return foundChico;
     }
 }
