@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CrossOrigin("*")
 @RequestMapping("/api/clientes")
 public class ClienteController {
-    @Autowired
+    @Autowired // Autowired sirve para que no sea necesario instanciar la clase ClienteService
     private ClienteService clienteService;
 
     /**
