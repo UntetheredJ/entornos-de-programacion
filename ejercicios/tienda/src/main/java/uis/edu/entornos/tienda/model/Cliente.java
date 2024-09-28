@@ -10,8 +10,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "cliente")
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,35 +23,34 @@ public class Usuario {
     @Column(name = "numeroDocumento")
     private String numeroDocumento;
 
-    @Column(name = "nombre")
-    private String nombre;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "nombreUsuario")
-    private String nombreUsuario;
+    @Column(name = "direccion")
+    private String direccion;
 
     @Column(name = "email")
     private String email;
 
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "telefono")
+    private String telefono;
+
     // Constructors
-    public Usuario() {
+    public Cliente() {
     }
 
-    public Usuario(Long id, TipoDocumento idTipoDocumento, String numeroDocumento, String nombre, String password,
-            String nombreUsuario, String email) {
+    public Cliente(Long id, TipoDocumento idTipoDocumento, String numeroDocumento, String direccion, String email,
+            String nombre, String telefono) {
         this.id = id;
         this.idTipoDocumento = idTipoDocumento;
         this.numeroDocumento = numeroDocumento;
-        this.nombre = nombre;
-        this.password = password;
-        this.nombreUsuario = nombreUsuario;
+        this.direccion = direccion;
         this.email = email;
+        this.nombre = nombre;
+        this.telefono = telefono;
     }
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
@@ -76,28 +75,12 @@ public class Usuario {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getEmail() {
@@ -107,5 +90,20 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 }

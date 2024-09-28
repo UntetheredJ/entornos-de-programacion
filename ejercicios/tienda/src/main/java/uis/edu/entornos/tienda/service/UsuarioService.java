@@ -1,6 +1,7 @@
 package uis.edu.entornos.tienda.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,13 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario findUsuarioById(Long id) {
-        return usuarioRepository.findById(id).orElse(null);
+    public Optional<Usuario> findUsuarioById(Long id) {
+        return usuarioRepository.findById(id);
     }
 
     @Override
-    public int deleteUsuario(Long id) {
+    public void deleteUsuario(Long id) {
         usuarioRepository.deleteById(id);
-        return 1;
+        return;
     }
 }

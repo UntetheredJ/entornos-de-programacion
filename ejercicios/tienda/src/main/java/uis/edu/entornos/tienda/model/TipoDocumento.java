@@ -8,15 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = TipoDocumento.TABLE_NAME)
+@Table(name = "tipodocumento")
 public class TipoDocumento {
-    public static final String TABLE_NAME = "tipodocumento";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo")
+    @Column
     private String tipo;
 
     // Constructors
@@ -45,6 +43,4 @@ public class TipoDocumento {
         this.tipo = tipo;
     }
 
-    
-    
 }

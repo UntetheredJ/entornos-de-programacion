@@ -1,6 +1,8 @@
 package uis.edu.entornos.tienda.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import uis.edu.entornos.tienda.model.Usuario;
 
 public interface IUsuarioService {
@@ -8,7 +10,7 @@ public interface IUsuarioService {
 
     Usuario newUsuario(Usuario usuario);
 
-    Usuario findUsuarioById(Long id);
+    Optional<Usuario> findUsuarioById(Long id);
 
-    int deleteUsuario(Long id);
+    void deleteUsuario(Long id);
 }
