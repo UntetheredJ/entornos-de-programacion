@@ -1,8 +1,19 @@
 # Proyecto: Tienda
-Este proyecto (taller) se centra en construir un API REST de varias tablas con integridad referencial. El diagrama Entidad/Relación es el siguiente.
+Realizado en conjunto por:
+- Juan David Escalante Pinilla - 2182308
+- Laura Rodríguez Cala - 2200168
+- David Santiago Morantes Duarte - 2200178
+- Oscar Andrés Ramírez Serna - 2200185
 
-![Diagrama Entidad/Relación](src/main/resources/static/TiendaDER.png)
+Este proyecto (taller) se centra en construir un API REST de varias tablas con integridad referencial. 
+
+El diagrama Entidad/Relación es el siguiente.
+
+<image src="src/main/resources/static/TiendaDER.png" width=600></image>
+
 > *Fuentes: prof. Carlos Beltrán*
+
+Dicho diagrama describe una base de datos relacional. Dicha base de datos puede encontrarse en la ruta /ejercicios/tienda/src/main/resources/templates/TiendaGenerica.sql, para ser importada en MySQL.
 
 Adicionalmente, el proyecto cuenta con documentación hecha en Swagger, la cual puede ser accedida, una vez ejecutado el proyecto, desde:
 http://localhost:8094/swagger-ui/index.html
