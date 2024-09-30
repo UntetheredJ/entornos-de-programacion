@@ -13,7 +13,7 @@ El diagrama Entidad/Relación es el siguiente.
 
 > *Fuentes: prof. Carlos Beltrán*
 
-Dicho diagrama describe una base de datos relacional. Dicha base de datos puede encontrarse en la ruta /ejercicios/tienda/src/main/resources/templates/TiendaGenerica.sql, para ser importada en MySQL.
+Dicho diagrama describe una base de datos relacional. El dump de la base de datos se encuentra en [TiendaGenerica.sql](/ejercicios/tienda/src/main/resources/templates/TiendaGenerica.sql), para ser importado en MySQL.
 
 Adicionalmente, el proyecto cuenta con documentación hecha en Swagger, la cual puede ser accedida, una vez ejecutado el proyecto, desde:
 http://localhost:8094/swagger-ui/index.html
