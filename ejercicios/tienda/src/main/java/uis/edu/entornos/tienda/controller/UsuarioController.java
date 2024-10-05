@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.v3.oas.annotations.Operation;
+import uis.edu.entornos.tienda.model.LoginDto;
 import uis.edu.entornos.tienda.model.Usuario;
 import uis.edu.entornos.tienda.service.UsuarioService;
 
@@ -92,5 +93,29 @@ public class UsuarioController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * Ingresa un usuario
+     * 
+     * @param usuarioDto usuario a ingresar
+     * @return usuario ingresado
+     */
+    @Operation(summary = "Ingresa un usuario")
+    @PostMapping("/loginclient")
+    public int login(@RequestBody LoginDto usuarioDto) {
+        return usuarioService.login(usuarioDto);
+    }
+
+    /**
+     * Ingresa un usuario
+     * 
+     * @param usuarioDto usuario a ingresar
+     * @return usuario ingresado
+     */
+    @Operation(summary = "Ingresa un usuario")
+    @PostMapping("/login")
+    public ResponseEntity<?> loginCliente(@RequestBody LoginDto usuarioDto) {
+        return usuarioService.ingresar(usuarioDto);
     }
 }
