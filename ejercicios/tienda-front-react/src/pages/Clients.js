@@ -24,45 +24,44 @@ const Clients = () => {
     const deleteClient = async (e, id) => {
         e.preventDefault();
         const response = await APIInvoke.invokeDELETE(`/clientes/${id}`);
-        console.log(response);
 
         // Verify response code}
-        // if (response.code === 200) {
-        //     const msg = "El cliente ha sido eliminado exitosamente.";
+        if (response.success === true) {
+            const msg = "El cliente ha sido eliminado exitosamente.";
 
-        //     SweetAlert({
-        //         title: "Información",
-        //         text: msg,
-        //         icon: "success",
-        //         buttons: {
-        //             confirm: {
-        //                 text: "Aceptar",
-        //                 value: true,
-        //                 visible: true,
-        //                 className: "btn btn-primary",
-        //                 closeModal: true
-        //             }
-        //         },
-        //     });
-        //     loadClients();
-        // } else {
-        //     const msg = "No se pudo eliminar el cliente.";
+            SweetAlert({
+                title: "Información",
+                text: msg,
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        text: "Aceptar",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-primary",
+                        closeModal: true
+                    }
+                },
+            });
+            loadClients();
+        } else {
+            const msg = "No se pudo eliminar el cliente.";
 
-        //     SweetAlert({
-        //         title: "Error",
-        //         text: msg,
-        //         icon: "error",
-        //         buttons: {
-        //             confirm: {
-        //                 text: "Aceptar",
-        //                 value: true,
-        //                 visible: true,
-        //                 className: "btn btn-danger",
-        //                 closeModal: true
-        //             }
-        //         },
-        //     });
-        // }
+            SweetAlert({
+                title: "Error",
+                text: msg,
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        text: "Aceptar",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-danger",
+                        closeModal: true
+                    }
+                },
+            });
+        }
     }
 
 

@@ -17,11 +17,9 @@ const Home = () => {
                     route1={"/home"}
                 />
                 <section className='content'>
-                    <div className='container-fluid'>
-                        <div className='row'>
-
-                        </div>
-                    </div>
+                    <p>
+                        Bienvenido al API de Tienda. Este es un proyecto de ejemplo para mostrar cómo se puede consumir un API REST con React.
+                    </p>
                 </section>
             </div>
             <Footer></Footer>
