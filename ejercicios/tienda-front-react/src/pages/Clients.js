@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import ContentHeader from '../components/ContentHeader';
@@ -113,9 +113,9 @@ const Clients = () => {
                                                 <td>{client.telefono}</td>
                                                 <td>
                                                     <div className="btn-group">
-                                                        <button type="button" className="btn btn-warning">
+                                                        <Link to={`/clients-edit/${client.id}@${client.idTipoDocumento.tipo}@${client.numeroDocumento}@${client.direccion}@${client.email}@${client.nombre}@${client.telefono}}`} type="button" className="btn btn-warning">
                                                             <i className="fas fa-edit" />
-                                                        </button>
+                                                        </Link>
                                                         <button onClick={(e) => deleteClient(e, client.id)} type="button" className="btn btn-danger">
                                                             <i className="fas fa-trash" />
                                                         </button>

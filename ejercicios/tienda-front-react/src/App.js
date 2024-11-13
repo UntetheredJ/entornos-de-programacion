@@ -6,6 +6,7 @@ import Register from './pages/auth/Register';
 import Home from './pages/Home';
 import Clients from './pages/Clients';
 import Admin from './pages/Admin';
+import Edit from './pages/Edit';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/home' exact element={<Home/>}/>
           <Route path='/admin' exact element={<Admin/>}/>
           <Route path='/clients' exact element={<Clients/>}/>
+          <Route path='/clients-edit/:id' exact element={<Edit/>}/>
         </Routes>
       </Router>
     </Fragment>
