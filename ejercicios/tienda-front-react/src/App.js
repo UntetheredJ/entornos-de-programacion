@@ -5,6 +5,7 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
 import Clients from './pages/Clients';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path='/' exact element={<Login/>}/>
           <Route path='/register' exact element={<Register/>}/>
           <Route path='/home' exact element={<Home/>}/>
+          <Route path='/admin' exact element={<Admin/>}/>
           <Route path='/clients' exact element={<Clients/>}/>
         </Routes>
       </Router>
