@@ -18,7 +18,7 @@ function App() {
           <Route path='/home' exact element={<Home/>}/>
           <Route path='/admin' exact element={<Admin/>}/>
           <Route path='/clients' exact element={<Clients/>}/>
-          <Route path='/clients-edit/:id' exact element={<Edit/>}/>
+          <Route path='/clients-edit' exact element={<Edit/>}/>
         </Routes>
       </Router>
     </Fragment>

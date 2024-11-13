@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SweetAlert from 'sweetalert';
 
 const Edit = () => {
+    const location = useLocation();
 
-    const { id } = useParams();
-    let arreglo = id.split('@');
-    const idC = arreglo[0];
-    const tipoD = arreglo[1];
-    const numeroD = arreglo[2];
-    const direccion = arreglo[3];
-    const email = arreglo[4];
-    const nombreC = arreglo[5];
-    const telefono = arreglo[6];
-
-    const [client, setClient] = useState({
-        tipoDocumento: tipoD,
-        numeroDocumento: numeroD,
-        direccionC: direccion,
-        emailC: email,
-        nombre: nombreC,
-        telefonoC: telefono
+    const [client, setClient] = useState(location.state?.client || {
+        tipoDocumento: '',
+        numeroDocumento: '',
+        direccion: '',
+        email: '',
+        nombre: '',
+        telefono: ''
     });
 
 
-    const { tipoDocumento, numeroDocumento, direccionC, emailC, nombre, telefonoC } = client;
+    const { tipoDocumento, numeroDocumento, direccion, email, nombre, telefono } = client;
 
     const onChange = (e) => {
         setClient({
@@ -33,50 +24,25 @@ const Edit = () => {
         });
     }
 
-   
-
     const onSubmit = (e) => {
         e.preventDefault();
-        const registerUser = async () => {
-
-            if(nombreC !== nombreC){
-                const msg = "Las contraseñas no coinciden.";
-    
-                SweetAlert({
-                    title: "Error",
-                    text: msg,
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            text: "Aceptar",
-                            value: true,
-                            visible: true,
-                            className: "btn btn-danger",
-                            closeModal: true
-                        }
-                    },
-                });
-            } else {
-    
-            }
-        }
-    
+        
     }
 
     useEffect(() => {
-        document.getElementById('nombre').focus();
+        document.getElementById('numeroDocumento').focus();
     }, []);
 
     return (
         <div class="hold-transition login-page">
             <div className="login-box">
                 <div className="login-logo">
-                    <Link to={"#"}><b>Edición de Registro</b></Link>
+                    <Link to={"#"}><b>Edición de Clientes</b></Link>
                 </div>
                 {/* /.login-logo */}
                 <div className="card">
                     <div className="card-body login-card-body">
-                        <p className="login-box-msg">Edita la Información correspondiente</p>
+                        <p className="login-box-msg">Edita la información correspondiente</p>
                         <form onSubmit={onSubmit}>
                             <div className="input-group mb-3">
                                 <input type="text" id='tipoDocumento' name='tipoDocumento' className="form-control" value={tipoDocumento} onChange={onChange}  />
@@ -88,20 +54,58 @@ const Edit = () => {
                             </div>
 
                             <div className="input-group mb-3">
-                                <input type="text" id='nombre' name='nombre' className="form-control" value={numeroDocumento} onChange={onChange} required placeholder="Nombre" />
+                                <input type="text" id='numeroDocumento' name='numeroDocumento' className="form-control" value={numeroDocumento} onChange={onChange} required placeholder="Número de Documento" />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
                                         <span className="fas fa-id-card" />
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="input-group mb-3">
+                                <input type="text" id='nombre' name='nombre' className="form-control" value={nombre} onChange={onChange} required placeholder="Nombre" />
+                                <div className="input-group-append">
+                                    <div className="input-group-text">
+                                        <span className="fas fa-id-card" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="input-group mb-3">
+                                <input type="text" id='direccion' name='direccion' className="form-control" value={direccion} onChange={onChange} required placeholder="Dirección" />
+                                <div className="input-group-append">
+                                    <div className="input-group-text">
+                                        <span className="fas fa-id-card" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="input-group mb-3">
+                                <input type="email" id='email' name='email' className="form-control" value={email} onChange={onChange} required placeholder="Email" />
+                                <div className="input-group-append">
+                                    <div className="input-group-text">
+                                        <span className="fas fa-envelope" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="input-group mb-3">
+                                <input type="text" id='telefono' name='telefono' className="form-control" value={telefono} onChange={onChange} required placeholder="Teléfono" />
+                                <div className="input-group-append">
+                                    <div className="input-group-text">
+                                        <span className="fas fa-phone" />
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div className="row">
                                 <div className="col-6">
                                     <button type="submit" className="btn btn-primary btn-block">Guardar</button>
                                 </div>
                                 {/* /.col */}
                                 <div className="col-6">
-                                    <Link to={"/"} className="btn btn-danger btn-block">Volver</Link>
+                                    <Link to={"/clients"} className="btn btn-danger btn-block">Volver</Link>
                                 </div>
                                 {/* /.col */}
                             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import ContentHeader from '../components/ContentHeader';
@@ -9,12 +9,20 @@ import SweetAlert from 'sweetalert';
 
 const Clients = () => {
 
+    const navigate = useNavigate();
     const [clients, setClients] = useState([]);
 
     const loadClients = async () => {
         const response = await APIInvoke.invokeGET('/list/clientes');
         //console.log(response);
         setClients(response);
+    }
+
+    const editClient = (client) => {
+        navigate(
+            '/clients-edit',
+            { state: { client: client }
+        })
     }
 
     useEffect(() => {
@@ -113,9 +121,9 @@ const Clients = () => {
                                                 <td>{client.telefono}</td>
                                                 <td>
                                                     <div className="btn-group">
-                                                        <Link to={`/clients-edit/${client.id}@${client.idTipoDocumento.tipo}@${client.numeroDocumento}@${client.direccion}@${client.email}@${client.nombre}@${client.telefono}}`} type="button" className="btn btn-warning">
+                                                        <button onClick={() => editClient(client)} className="btn btn-warning">
                                                             <i className="fas fa-edit" />
-                                                        </Link>
+                                                        </button>
                                                         <button onClick={(e) => deleteClient(e, client.id)} type="button" className="btn btn-danger">
                                                             <i className="fas fa-trash" />
                                                         </button>
