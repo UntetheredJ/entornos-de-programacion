@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Clients from './pages/Clients';
 import Admin from './pages/Admin';
 import Edit from './pages/Edit';
+import Create from './pages/Create';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Route path='/admin' exact element={<Admin/>}/>
           <Route path='/clients' exact element={<Clients/>}/>
           <Route path='/clients-edit' exact element={<Edit/>}/>
+          <Route path='/clients-create' exact element={<Create/>}/>
+
         </Routes>
       </Router>
     </Fragment>

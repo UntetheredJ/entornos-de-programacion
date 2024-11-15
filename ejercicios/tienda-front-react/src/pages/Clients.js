@@ -14,7 +14,6 @@ const Clients = () => {
 
     const loadClients = async () => {
         const response = await APIInvoke.invokeGET('/list/clientes');
-        //console.log(response);
         setClients(response);
     }
 
@@ -31,52 +30,49 @@ const Clients = () => {
 
     const deleteClient = async (e, id) => {
         e.preventDefault();
-        const response = await APIInvoke.invokeDELETE(`/clientes/${id}`);
 
-        // Verify response code}
-        if (response.success === true) {
-            const msg = "El cliente ha sido eliminado exitosamente.";
-
-            SweetAlert({
-                title: "Información",
-                text: msg,
-                icon: "success",
-                buttons: {
-                    confirm: {
-                        text: "Aceptar",
-                        value: true,
-                        visible: true,
-                        className: "btn btn-primary",
-                        closeModal: true
-                    }
+        SweetAlert({
+            title: "¿Estás seguro?",
+            text: "No podrás revertir esta acción",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true
                 },
-            });
-            loadClients();
-        } else {
-            const msg = "No se pudo eliminar el cliente.";
-
-            SweetAlert({
-                title: "Error",
-                text: msg,
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        text: "Aceptar",
-                        value: true,
-                        visible: true,
-                        className: "btn btn-danger",
-                        closeModal: true
-                    }
-                },
-            });
-        }
+                confirm: {
+                    text: "Sí, eliminar",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                }
+            },
+        }).then(async (confirm) => {
+            if (confirm) {
+                const response = await APIInvoke.invokeDELETE(`/clientes/${id}`);
+                if (response && response.success) {
+                    SweetAlert("Éxito", "El cliente ha sido eliminado exitosamente.", "success");
+                    loadClients();
+                } else {
+                    SweetAlert("Error", "No se pudo eliminar el cliente.", "error");
+                }
+            }
+        });
     }
 
+    // Navegar a la página de creación de cliente
+    const createClient = () => {
+        navigate('/clients-create');
+    }
 
     return (
         <div className='wrapper'>
-            <Navbar></Navbar>
-            <Sidebar></Sidebar>
+            <Navbar />
+            <Sidebar />
             <div className='content-wrapper'>
                 <ContentHeader
                     title={"Clientes"}
@@ -87,10 +83,10 @@ const Clients = () => {
                 <section className='content'>
                     <div className="card">
                         <div className="card-header">
-                            <h3 className="card-title">Clientes</h3>
-                            <div className="card-tools">
-                                <button type="button" className="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i className="fas fa-minus" />
+                            <div className="d-flex justify-content-between">
+                                <h3 className="card-title">Clientes</h3>
+                                <button onClick={createClient} className="btn btn-primary">
+                                    Crear Cliente
                                 </button>
                             </div>
                         </div>
@@ -109,43 +105,36 @@ const Clients = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {
-                                        clients.map((client) => (
-                                            <tr key={client.id}>
-                                                <td>{client.id}</td>
-                                                <td>{client.idTipoDocumento.tipo}</td>
-                                                <td>{client.numeroDocumento}</td>
-                                                <td>{client.direccion}</td>
-                                                <td>{client.email}</td>
-                                                <td>{client.nombre}</td>
-                                                <td>{client.telefono}</td>
-                                                <td>
-                                                    <div className="btn-group">
-                                                        <button onClick={() => editClient(client)} className="btn btn-warning">
-                                                            <i className="fas fa-edit" />
-                                                        </button>
-                                                        <button onClick={(e) => deleteClient(e, client.id)} type="button" className="btn btn-danger">
-                                                            <i className="fas fa-trash" />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                    {clients.map((client) => (
+                                        <tr key={client.id}>
+                                            <td>{client.id}</td>
+                                            <td>{client.idTipoDocumento?.tipo}</td>
+                                            <td>{client.numeroDocumento}</td>
+                                            <td>{client.direccion}</td>
+                                            <td>{client.email}</td>
+                                            <td>{client.nombre}</td>
+                                            <td>{client.telefono}</td>
+                                            <td>
+                                                <div className="btn-group">
+                                                    <button onClick={() => editClient(client)} className="btn btn-warning">
+                                                        <i className="fas fa-edit" />
+                                                    </button>
+                                                    <button onClick={(e) => deleteClient(e, client.id)} type="button" className="btn btn-danger">
+                                                        <i className="fas fa-trash" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>
-
                         </div>
-                        <div className="card-footer">
-                        </div>
+                        <div className="card-footer"></div>
                     </div>
-
                 </section>
             </div>
-            <Footer></Footer>
-
+            <Footer />
         </div>
-
-
     );
 }
 

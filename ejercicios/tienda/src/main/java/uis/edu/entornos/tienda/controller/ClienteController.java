@@ -3,6 +3,7 @@ package uis.edu.entornos.tienda.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,7 +70,10 @@ public class ClienteController {
     public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente){
         Optional<Cliente> client = clienteService.findClienteById(cliente.getId());
         if(client != null){
+
             return ResponseEntity.ok(clienteService.newCliente(cliente));
+            
+            
         } else {
             return ResponseEntity.notFound().build();
         }

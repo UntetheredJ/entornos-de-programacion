@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SweetAlert from 'sweetalert';
 import APIInvoke from '../utils/APIInvoke';
 import { useNavigate } from 'react-router-dom';
 
+const Create = () => {
 
-const Edit = () => {
-    const location = useLocation();
     const navigate = useNavigate();
 
-
-    const [client, setClient] = useState(location.state?.client || {
+    const [client, setClient] = useState({
         id: '',
         idTipoDocumento: { id: '', tipo: '' },
         numeroDocumento: '',
@@ -64,12 +62,13 @@ const Edit = () => {
             telefono: client.telefono
         };
 
-        const response = await APIInvoke.invokePUT('/clientes', data);
+        const response = await APIInvoke.invokePOST('/clientes', data);
         console.log(response)
+
         if (response && Object.keys(response).length > 0) {
             SweetAlert({
                 title: "Éxito",
-                text: "Cliente actualizado correctamente",
+                text: "Cliente creado correctamente",
                 icon: "success",
                 buttons: {
                     confirm: {
@@ -84,7 +83,7 @@ const Edit = () => {
                 navigate('/clients');  
             });
         } else {
-            SweetAlert("Error", "No se pudo actualizar el cliente", "error");
+            SweetAlert("Error", "No se pudo crear el cliente", "error");
         }
         
         
@@ -99,11 +98,11 @@ const Edit = () => {
         <div className="hold-transition login-page">
             <div className="login-box">
                 <div className="login-logo">
-                    <Link to={"#"}><b>Edición de Clientes</b></Link>
+                    <Link to={"#"}><b>Creación de Clientes</b></Link>
                 </div>
                 <div className="card">
                     <div className="card-body login-card-body">
-                        <p className="login-box-msg">Edita la información correspondiente</p>
+                        <p className="login-box-msg">Inrgesa la información correspondiente</p>
                         <form onSubmit={onSubmit}>
                             {/* Desplegable para el tipo de documento */}
                             <div className="input-group mb-3">
@@ -234,4 +233,4 @@ const Edit = () => {
     );
 };
 
-export default Edit;
+export default Create;
